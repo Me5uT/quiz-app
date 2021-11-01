@@ -1,3 +1,6 @@
+import { IAnswerModel } from "./../models/AnswerModel";
+import { shuffleArray } from "./../utils/utils";
+import { IQuestion, QuestionState } from "./../models/QuestionModel";
 import { makeAutoObservable } from "mobx";
 import { Difficulty } from "../models";
 import { url } from "../services/API";
@@ -6,12 +9,19 @@ export class QuestionStore {
   constructor() {
     makeAutoObservable(this);
   }
+
   loading: boolean = false;
-  questions: string[] = [];
+  questions: QuestionState[] = [];
   number: number = 0;
-  userAnswers: string[] = [];
+  userAnswers: IAnswerModel[] = [];
   score: number = 0;
   gameOver: boolean = true;
+
+  initializeQuestion = () => {
+    this.userAnswers = [];
+    this.score = 0;
+    this.number = 0;
+  };
 
   onShowLoading = () => {
     this.loading = true;
@@ -21,20 +31,20 @@ export class QuestionStore {
     this.loading = false;
   };
 
-  setQuestions = (question: string) => {
-    this.questions.push(question);
+  setQuestions = (question: QuestionState[]) => {
+    this.questions = [...question];
   };
 
   setNumber = (num: number) => {
     this.number = num;
   };
 
-  setUserAnswers = (answer: string) => {
+  setUserAnswers = (answer: IAnswerModel) => {
     this.userAnswers.push(answer);
   };
 
   setScore = (scr: number) => {
-    this.score = scr;
+    this.score += scr;
   };
 
   setGameOver = (status: boolean) => {
@@ -47,8 +57,17 @@ export class QuestionStore {
       const endpoint = `${url}amount=${amount}&difficulty=${difficulty}&type=multiple`;
       const data = await (await fetch(endpoint)).json();
 
-      console.log("data", data.results);
+      console.log(data);
       this.onHideLoading();
+      const mappedData = data.results.map((question: IQuestion) => ({
+        ...question,
+        answers: shuffleArray([
+          ...question.incorrect_answers,
+          question.correct_answer,
+        ]),
+      }));
+      console.log(mappedData);
+      return mappedData;
     } catch (error) {
       console.log("error message:", error);
       this.onHideLoading();

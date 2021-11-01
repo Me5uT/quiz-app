@@ -2,9 +2,11 @@ import { Difficulty } from "./DifficultyModel";
 
 export interface IQuestion {
   category: string;
-  correctAnswer: string;
+  correct_answer: string;
   difficulty: Difficulty;
-  incorrectAnswer: string[];
+  incorrect_answers: string[];
   question: string;
   type: string;
 }
+
+export type QuestionState = IQuestion & { answers: string[] };
