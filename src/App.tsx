@@ -1,15 +1,14 @@
 import React from "react";
 import { QuestionCard } from "./components";
+import { Difficulty } from "./models";
+import { observer } from "mobx-react";
+import { QuestionStore } from "./stores/Question.store";
+import { Loader } from "./components/Loader";
 
 const TOTAL_QUESTION = 10;
 
-const App = () => {
-  const [loading, setLoading] = React.useState<boolean>(false);
-  const [questions, setQuestions] = React.useState<string[]>([]);
-  const [number, setNumber] = React.useState<number>(0);
-  const [userAnswers, setUserAnswers] = React.useState<string[]>([]);
-  const [score, setScore] = React.useState<number>(0);
-  const [gameOver, setGameOver] = React.useState<boolean>(true);
+export const App = observer(() => {
+  const store = React.useMemo(() => new QuestionStore(), []);
 
   const startTrivia = async () => {};
 
@@ -17,6 +16,9 @@ const App = () => {
 
   const nextQuestion = () => {};
 
+  if (store.loading) {
+    return <Loader />;
+  }
   return (
     <div className="App">
       <h1>React Quiz App</h1>
@@ -39,6 +41,4 @@ const App = () => {
       </button>
     </div>
   );
-};
-
-export default App;
+});
