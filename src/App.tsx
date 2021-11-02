@@ -5,21 +5,21 @@ import { observer } from "mobx-react";
 import { QuestionStore } from "./stores/Question.store";
 import { Loader } from "./components/Loader";
 import { IAnswerModel } from "./models/AnswerModel";
-// import { asd } from "./App.styles";
+import "./index.css";
 
 const TOTAL_QUESTION = 10;
 
 export const App = observer(() => {
   const store = React.useMemo(() => new QuestionStore(), []);
   const {
-    onShowLoading,
-    onHideLoading,
     loading,
     questions,
     number,
     userAnswers,
     score,
     gameOver,
+    onShowLoading,
+    onHideLoading,
     initializeQuestion,
     setQuestions,
     setNumber,
@@ -60,47 +60,46 @@ export const App = observer(() => {
   };
 
   const nextQuestion = () => {
-    const nextQuestion = number + 1;
+    const nextQ = number + 1;
 
-    if (nextQuestion === TOTAL_QUESTION) {
+    if (nextQ === TOTAL_QUESTION) {
       setGameOver(true);
     } else {
-      setNumber(nextQuestion);
+      setNumber(nextQ);
     }
   };
 
   return (
-    <>
-      {/* <GlobalStyle /> */}
-      <div className="App">
-        {console.log(questions)}
-        <h1>React Quiz App</h1>
-        {(gameOver || userAnswers.length === TOTAL_QUESTION) && (
-          <button className="start" onClick={startTrivia}>
-            Start
-          </button>
-        )}
-        {!gameOver && <p className="score"> Score: {score}</p>}
-        {loading && <Loader />}
-        {!loading && !gameOver && questions.length > 0 && (
-          <QuestionCard
-            questionId={number + 1}
-            totalQuestions={TOTAL_QUESTION}
-            question={questions[number].question}
-            answers={questions[number].answers}
-            userAnswer={userAnswers ? userAnswers[number] : undefined}
-            callback={checkAnswer}
-          />
-        )}
+    <div className="app-container">
+      <div className="app-title">Quiz App</div>
+      {(gameOver || userAnswers.length === TOTAL_QUESTION) && (
+        <button className="start" onClick={startTrivia}>
+          Start
+        </button>
+      )}
+      {!gameOver && <p className="score"> Score: {score}</p>}
+      {loading && <Loader />}
+      {!loading && !gameOver && questions.length > 0 && (
+        <QuestionCard
+          questionId={number + 1}
+          totalQuestions={TOTAL_QUESTION}
+          question={questions[number].question}
+          answers={questions[number].answers}
+          userAnswer={userAnswers ? userAnswers[number] : undefined}
+          callback={checkAnswer}
+        />
+      )}
+
+      <div className="button-container">
         {!gameOver &&
-        !loading &&
-        userAnswers.length === number + 1 &&
-        number !== TOTAL_QUESTION - 1 ? (
-          <button className="next" onClick={nextQuestion}>
-            Next Question
-          </button>
-        ) : null}
+          !loading &&
+          userAnswers.length === number + 1 &&
+          number !== TOTAL_QUESTION - 1 && (
+            <button className="next" onClick={nextQuestion}>
+              Next Question
+            </button>
+          )}
       </div>
-    </>
+    </div>
   );
 });

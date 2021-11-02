@@ -1,0 +1,126 @@
+html {
+  height: 100%;
+}
+body {
+  background-image: url("./images/backgroundJPG.jpg");
+  background-size: cover;
+  margin: 0;
+  padding: 0 20px;
+  display: flex;
+  justify-content: center;
+}
+* {
+  font-family: "Catamaran", sans-serif;
+  box-sizing: border-box;
+}
+
+.question-card-container {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+/* .question-container {
+  background-color: #0085a3;
+} */
+
+.answer-container {
+  align-items: center;
+}
+
+.button-container {
+  justify-content: center;
+  display: flex;
+  margin: 30px;
+}
+
+.next {
+  width: auto;
+  cursor: pointer;
+  background: linear-gradient(180deg, #ffffff, aqua);
+  border: 1 px solid #d38558;
+  box-shadow: 0px 5px 10px rgb(0 0 0 / 25%);
+  border-radius: 21 px;
+  height: 20 px;
+  margin: 20 px 0;
+  padding: 0 40 px;
+  color: black;
+  font-size: x-large;
+  justify-items: center;
+  align-items: center;
+}
+.start {
+  width: auto;
+  cursor: pointer;
+  background: linear-gradient(180deg, #ffffff, aqua);
+  border: 1 px solid #d38558;
+  box-shadow: 0px 5px 10px rgb(0 0 0 / 25%);
+  border-radius: 21 px;
+  height: 40 px;
+  margin: 20 px 0;
+  padding: 0 40 px;
+  color: black;
+}
+.score {
+  color: #fff;
+  font-size: 3rem;
+  margin: 0;
+}
+
+.number {
+  font-size: 25px;
+  font-weight: bold;
+}
+
+.question-container {
+  font-size: xx-large;
+}
+
+.app-title {
+  font-family: Fascinate Inline;
+  background-image: linear-gradient(180deg, #fff, #87f1ff);
+  font-weight: 400;
+  background-size: 100%;
+  background-clip: text;
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  -moz-background-clip: text;
+  -moz-text-fill-color: transparent;
+  filter: drop-shadow(2px 2px #0085a3);
+  font-size: 70px;
+  text-align: center;
+  margin: 20px;
+}
+
+.button-wrapper {
+  transition: all 0.3s ease;
+}
+.button-wrapper:hover {
+  opacity: 0.8;
+}
+
+button {
+  cursor: pointer;
+  user-select: none;
+  font-size: 0.8rem;
+  width: 100%;
+  min-width: 150px;
+  height: 55px;
+  margin: 5px 0;
+  border: 3px solid #ffffff;
+  box-shadow: 1px 2px 0px rgba(0, 0, 0, 0.1);
+  border-radius: 10px;
+  color: rgb(0, 0, 0);
+  text-shadow: 0px 1px 0px rgba(0, 0, 0, 0.25);
+}
+
+.correct {
+  background: linear-gradient(90deg, #56ffa4, #59bc86);
+}
+.no-correct-user-clicked {
+  background: linear-gradient(90deg, #ff5656, #c16868);
+}
+
+.no-correct-no-user-clicked {
+  background: linear-gradient(90deg, #56ccff, #6eafb4);
+}

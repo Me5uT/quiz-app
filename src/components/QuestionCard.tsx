@@ -1,7 +1,6 @@
 import { observer } from "mobx-react";
 import React from "react";
 import { IAnswerModel } from "../models/AnswerModel";
-
 interface IQuestionCardProps {
   question: string;
   answers: string[];
@@ -19,21 +18,38 @@ export const QuestionCard = observer(
     userAnswer,
     questionId,
     totalQuestions,
-  }: IQuestionCardProps) => (
-    <div>
-      <p className="number">
-        Question: {questionId} / {totalQuestions}
-      </p>
-      <p dangerouslySetInnerHTML={{ __html: question }} />
-      <div>
-        {answers.map((answer) => (
-          <div key={answer}>
-            <button disabled={!!userAnswer} value={answer} onClick={callback}>
-              <span dangerouslySetInnerHTML={{ __html: answer }} />
-            </button>
-          </div>
-        ))}
+  }: IQuestionCardProps) => {
+    return (
+      <div className="question-card-container">
+        <p className="number">
+          Question: {questionId} / {totalQuestions}
+        </p>
+        <p
+          dangerouslySetInnerHTML={{ __html: question }}
+          className="question-container"
+        />
+        <div className="answer-container">
+          {answers.map((answer) => (
+            <div key={answer} className="button-wrapper">
+              <button
+                disabled={!!userAnswer}
+                value={answer}
+                onClick={callback}
+                className={
+                  userAnswer?.correctAnswer === answer
+                    ? "correct"
+                    : userAnswer?.correctAnswer !== answer &&
+                      userAnswer?.answer === answer
+                    ? "no-correct-user-clicked"
+                    : "no-correct-no-user-clicked"
+                }
+              >
+                <span dangerouslySetInnerHTML={{ __html: answer }} />
+              </button>
+            </div>
+          ))}
+        </div>
       </div>
-    </div>
-  )
+    );
+  }
 );
